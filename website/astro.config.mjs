@@ -4,6 +4,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://banks.acm.illinois.edu',
+  output: 'static',
+  trailingSlash: 'always',
+  vite: {
+    plugins: [tailwindcss()],
+  },
   experimental: {
     // https://docs.astro.build/en/reference/experimental-flags/fonts/
     fonts: [
@@ -14,9 +20,5 @@ export default defineConfig({
         weights: [400, 600, 700],
       }
     ]
-  },
-  output: 'static',
-  vite: {
-    plugins: [tailwindcss()],
   },
 });
