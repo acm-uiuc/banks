@@ -1,0 +1,7 @@
+{
+  "name": "banks-of-the-boneyard",
+  "compatibility_date": "2025-10-29",
+  "assets": {
+    "directory": "./dist"
+  }
+}
