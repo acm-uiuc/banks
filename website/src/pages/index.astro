@@ -3,6 +3,7 @@ import Layout from '@/layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
 const articles = await getCollection('articles');
+const issues = (await getCollection('issues')).sort((a, b) => b.data.date - a.data.date);
 ---
 <Layout>
   <p class="font-semibold italic text-4xl uppercase">Banks</p>
@@ -16,4 +17,13 @@ const articles = await getCollection('articles');
       </li>
     ))}
   </ul>
+  <h1 class="font-bold text-2xl mt-8">Issues</h1>
+  <ul>
+    {issues.map((issue) => (
+      <li>
+        <a href="#">
+          {`${issue.data.date.toISOString().split('T')[0]} - Volume ${issue.data.volume}, Issue ${issue.data.issue} [${issue.data.print ? Object.keys(issue.data.print).join(', ') : 'No Print Available'}]`}
+        </a>
+      </li>
+    ))}
 </Layout>

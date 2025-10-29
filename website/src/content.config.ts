@@ -35,6 +35,7 @@ export const collections = {
       date: z.coerce.date().describe("The publication date of the issue"),
       print: z.optional(z.object({
         pdf: z.optional(z.coerce.string()).describe("Relative path to the final/built PDF"),
+        pdf_scan: z.optional(z.coerce.string()).describe("Relative path to the scanned PDF (if different from the final PDF)"),
         source: z.optional(z.coerce.string()).describe("Relative path to the source file (e.g. LaTeX, Typst, PostScript); compress into a Zip archive or tarball if there are multiple files"),
         website: z.optional(z.coerce.string()).describe("If the issue is hosted on an external website, provide the URL here (can also be used for Internet Archive links)"),
       })),
