@@ -23,6 +23,7 @@ export const collections = {
       authors: z.optional(z.array(z.coerce.string())).describe("List of author names, matching names in the Profiles collection"),
       image: z.optional(ImageObject(image)).describe("Cover image for the article"),
       tags: z.optional(z.array(z.coerce.string())).describe("Tags or categories for the article"),
+      slug: z.coerce.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).describe("Custom URL slug for the article (lowercase letters, numbers, hyphens only)"),
     }),
   }),
 
@@ -39,10 +40,11 @@ export const collections = {
       })),
       credits: z.optional(z.array(
         z.object({
-          title: z.coerce.string().describe("Title or role of the credited individual or group"),
+          title: z.coerce.string().describe("Title or role of the credited individual or group at the time of publication"),
           names: z.array(z.coerce.string()).describe("Name(s) of the credited individual(s)"),
         })
       )).describe("List of credits or acknowledgments for the issue"),
+      slug: z.optional(z.coerce.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)*$/)).describe("Custom URL slug for the issue (lowercase letters, numbers, hyphens only, can include slashes for nested paths)"),
     }),
   }),
 
