@@ -1,0 +1,19 @@
+---
+import '@/styles/global.css';
+import BaseHead from '@/components/BaseHead.astro';
+
+import type { Props as BaseHeadProps } from '@/components/BaseHead.astro';
+export interface Props extends BaseHeadProps { }
+
+const props = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en" transition:animate="none">
+  <head>
+    <BaseHead {...props} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
