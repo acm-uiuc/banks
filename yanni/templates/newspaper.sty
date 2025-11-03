@@ -1,0 +1,138 @@
+%%%	Matthew Allen
+%%%	January 14, 2007
+%%%	Modified for custom logo usage
+%%%	Fixed centering issue for date line
+%%%
+
+%******* 	Identification   *****
+\ProvidesPackage{newspaper}
+\NeedsTeXFormat{LaTeX2e}
+
+%******* 	Declaration of options *****
+% no options at this time
+
+%******* 	Execution of options   *****
+
+%****** 	Package Loading   *****
+\RequirePackage{graphicx}  % needed for logo image
+
+%******		main code *****
+
+%%%%%%%%%%% Define Text Dimensions  %%%%%%%
+
+\setlength\topmargin{-48pt} 		% article default = -58pt
+\setlength\headheight{0pt}  		% article default = 12pt
+\setlength\headsep{34pt}		% article default = 25pt
+\setlength\marginparwidth{-20pt}	% article default = 121pt
+\setlength\textwidth{7.0in}		% article default = 418pt
+\setlength\textheight{9.5in}		% article default = 296pt
+\setlength\oddsidemargin{-18pt}		% centers 7in text on 8.5in page
+\setlength\evensidemargin{-18pt}	% centers 7in text on 8.5in page
+
+%%%% counters for volume and number %%%%
+
+\newcounter{volume}
+\newcommand\currentvolume[1]{\setcounter{volume}{#1}}
+\newcounter{issue}
+\newcommand\currentissue[1]{\setcounter{issue}{#1}}
+
+%%%% set internal variables %%%%
+
+\def\@paperlogo{banks-logo.png} 
+\def\@leftlogo{acm-logo.png} 
+% \def\@headername{Banks of the Boneyard}
+\def\@paperlocation{Urbana, IL}
+\def\@paperprice{FREE}
+
+\newcommand\SetPaperLogo[1]{%
+	\def\@paperlogo{#1}}
+\newcommand\SetLeftLogo[1]{%
+	\def\@leftlogo{#1}}
+\newcommand\SetHeaderName[1]{%
+	\def\@headername{#1}}
+\newcommand\SetPaperLocation[1]{%
+	\def\@paperlocation{#1}}
+\newcommand\SetPaperPrice[1]{%
+	\def\@paperprice{#1}}
+
+
+%%%%%%%%%%% Redefine \maketitle     %%%%%%%
+
+\renewcommand{\maketitle}{\thispagestyle{empty}
+\vspace*{-40pt}
+\noindent
+\begin{minipage}[c]{1.2in}
+\raggedright
+\includegraphics[width=0.75in]{\@leftlogo}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{4.6in}
+\centering
+\includegraphics[width=4.5in]{\@paperlogo}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{1.2in}
+\raggedleft
+\textbf{\footnotesize \@paperlocation}
+\end{minipage}
+\vspace*{-0.05in}
+
+\noindent\rule[0pt]{\textwidth}{0.5pt}\\
+% Fixed centering using minipages with equal width
+\noindent\begin{minipage}[t]{2.2in}
+\raggedright
+{\small VOL.\MakeUppercase{\arabic{volume}}\ldots Iss.\arabic{issue}}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{2.6in}
+\centering
+\MakeUppercase{\small\it\@date}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{2.2in}
+\raggedleft
+{\small\MakeUppercase{\@paperprice}}
+\end{minipage}\\
+\rule[6pt]{\textwidth}{1.2pt}
+\pagestyle{plain}
+}
+
+%%%%%%%   redefine plain page style  %%%%%%%
+\renewcommand{\ps@plain}{%
+		\renewcommand\@oddfoot{}%					% empty recto footer
+		\let\@evenfoot\@oddfoot						% empty verso footer
+		\renewcommand\@evenhead
+			{\parbox{\textwidth}{\vspace*{4pt}
+			\noindent\begin{minipage}[t]{1.8in}
+			\raggedright
+			{\small VOL.\MakeUppercase{\arabic{volume}}\ldots Iss.\arabic{issue}}
+			\end{minipage}%
+			\hfill
+			\begin{minipage}[t]{3.4in}
+			\centering
+			\normalfont\textbf{\@headername}\quad\MakeUppercase{\it\@date}
+			\end{minipage}%
+			\hfill
+			\begin{minipage}[t]{1.8in}
+			\raggedleft
+			\textrm{\thepage}
+			\end{minipage}\\
+			\rule{\textwidth}{0.5pt}
+			\vspace*{12pt}}}%
+		\let\@oddhead\@evenhead}
+		
+		
+
+%%%%%%%%%%%  Headline (with byline) command  %%%%%%%%%
+
+\newcommand\headline[1]{\begin{center} #1\\ %
+			\rule[3pt]{0.4\hsize}{0.5pt}\\ \end{center} \par}
+\newcommand\byline[2]{\begin{center} #1 \\%
+			{\footnotesize\bf By \MakeUppercase{#2}} \\ %
+			\rule[3pt]{0.4\hsize}{0.5pt}\\ \end{center} \par}
+\newcommand\closearticle{{\begin{center}\rule[6pt]{\hsize}{1pt}\vspace*{-16pt}
+			\rule{\hsize}{0.5pt}\end{center}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%% End of Package   %%%%%%%%%%%%%%%

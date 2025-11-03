@@ -1,0 +1,49 @@
+volume: 
+  43
+
+issue:
+  1
+
+letter_from_the_chair: 
+    lftc
+
+article_order:
+  - banks
+  - rparticle
+  - qiskitfallfest
+  - robotics
+  - icpc
+  - sigplan
+  - signll
+  - gamebuilders
+  - siggraph
+  - sigecom
+
+directory_order:
+  - acm
+  - corporate_committee
+  - infrastructure_committee
+  - academic_committee
+  - social_committee
+  - marketing_committee
+  - mentorship_committee
+  - reflections_projections
+  - hackillinois
+  - sigpwny
+  - sigchi
+  - gamebuilders
+  - sigaida
+  - siggraph
+  - icpc
+  - sigmobile
+  - sigmusic
+  - glug
+  - signll
+  - sigma
+  - sigquantum
+  - sigecom
+  - sigplan
+  - sigpolicy
+  - sigarch
+  - sigrobotics
+  - sigtricity

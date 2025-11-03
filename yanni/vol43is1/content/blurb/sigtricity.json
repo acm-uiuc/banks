@@ -1,0 +1,29 @@
+{
+  "name": "SIGtricity",
+  "chairs": [
+    {
+      "name": "Ansh Verma",
+      "title": "Lead",
+      "email": "anshv3@illinois.edu"
+    },
+    {
+      "name": "Noah Rockoff",
+      "title": "Lead",
+      "email": "noahlr2@illinois.edu"
+    }
+  ],
+  "website": "https://sigtricity.acm.illinois.edu/",
+  "links": {
+    "discord": "https://discord.gg/4yRWQuzhEV"
+  },
+  "blurb": "Sigtricity is the first SIG specializing in hardware and electrical engineering, while also incorporating CS and programming into hardware. We aim to bridge the gap between students who want to take on projects to build their resume and skill set, but do not know where to start. We provide explanations and directions that can be understood by any major or level of experience and provide all the parts. All you need to do is show up and be willing to learn.",
+  "status": "active",
+  "meeting_times": [
+    {
+      "date": "wednesday",
+      "start_time": 1080,
+      "end_time": 1140,
+      "location": "ECEB 4070"
+    }
+  ]
+}

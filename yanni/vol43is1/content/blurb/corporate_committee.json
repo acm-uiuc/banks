@@ -1,0 +1,19 @@
+{
+  "name": "Corporate Committee",
+  "chairs": [
+    {
+      "name": "Adya Daruka",
+      "title": "Co-chair",
+      "email": "adaruka2@illinois.edu"
+    },
+    {
+      "name": "Akshay Vellore",
+      "title": "Co-chair",
+      "email": "akshayv4@illinois.edu"
+    }
+  ],
+  "website": "",
+  "links": {},
+  "blurb": "The corporate team handles communication with ACM@UIUC's sponsors. Our current sponsors include PrairieLearn, Atlassian, Capital One, Citadel, RandomLabs, Visa, and KLA.",
+  "status": "active"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "SIGQuantum",
+  "chairs": [
+    {
+      "name": "Sasha Levinshteyn",
+      "title": "Lead",
+      "email": "al68@illinois.edu"
+    },
+    {
+      "name": "George Huebner",
+      "title": "Lead",
+      "email": "georgeh3@illinois.edu"
+    },
+    {
+      "name": "River Chen",
+      "title": "Lead",
+      "email": "riveryc2@illinois.edu"
+    },
+    {
+      "name": "Shreyes Bharat",
+      "title": "Lead",
+      "email": "sbharat2@illinois.edu"
+    }
+  ],
+  "website": "https://sigquantum.com",
+  "links": {
+    "discord": "https://discord.gg/PmaXeHPaFs"
+  },
+  "blurb": "SIGQuantum is the Special Interest Group for Quantum Computing and Information here at UIUC. We cover everything and anything in the quantum computing field from quantum hardware to quantum software to quantum theory. Most of our regular meetings consist of members presenting or discussing topics they’re interested in. All backgrounds welcome!",
+  "status": "active",
+  "meeting_times": [
+    {
+      "date": "wednesday",
+      "start_time": 1080,
+      "end_time": 1140,
+      "location": "SC 1304"
+    }
+  ]
+}

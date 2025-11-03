@@ -1,0 +1,19 @@
+{
+  "name": "HackIllinois",
+  "chairs": [
+    {
+      "name": "Lucy Wu",
+      "title": "Co-chair",
+      "email": "lucywu3@illinois.edu"
+    },
+    {
+      "name": "Sada Challa",
+      "title": "Co-chair",
+      "email": "pchal7@illinois.edu"
+    }
+  ],
+  "website": "https://hackillinois.org",
+  "links": {},
+  "blurb": "HackIllinois is UIUC's premier collegiate hackathon. With over 1000 attendees and 50 mentors in 2019, the hackathon has become one of the largest and most well-regarded in the nation.",
+  "status": "active"
+}

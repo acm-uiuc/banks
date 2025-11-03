@@ -1,0 +1,32 @@
+{
+  "name": "ACM",
+  "chairs": [
+    {
+      "name": "Adhi Thirumala",
+      "title": "Treasurer",
+      "email": "adhit2@illinois.edu"
+    },
+    {
+      "name": "Jacob Levine",
+      "title": "Chair",
+      "email": "jlevine4@illinois.edu"
+    },
+    {
+      "name": "Krish Gangal",
+      "title": "Secretary",
+      "email": "kgangal2@illinois.edu"
+    },
+    {
+      "name": "Sherry Long",
+      "title": "Vice Chair",
+      "email": "sherryl4@illinois.edu"
+    }
+  ],
+  "website": "https://acm.illinois.edu",
+  "links": {
+    "discord": "https://acm.gg/discord",
+    "instagram": "https://instagram.com/acm.uiuc"
+  },
+  "blurb": "Officers of the overarching ACM@UIUC organisation.",
+  "status": "active"
+}

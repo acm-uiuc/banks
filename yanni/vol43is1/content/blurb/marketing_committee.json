@@ -1,0 +1,19 @@
+{
+  "name": "Marketing Committee",
+  "chairs": [
+    {
+      "name": "Jasmine Liu",
+      "title": "Co-chair",
+      "email": "jrliu2@illinois.edu"
+    },
+    {
+      "name": "Veda Fernandes",
+      "title": "Co-chair",
+      "email": "vedaf2@illinois.edu"
+    }
+  ],
+  "website": "",
+  "links": {},
+  "blurb": "The marketing team organizes social media and branding for ACM@UIUC.",
+  "status": "active"
+}

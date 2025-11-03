@@ -1,0 +1,24 @@
+{
+  "name": "GameBuilders",
+  "chairs": [
+    {
+      "name": "Ethan Wang",
+      "title": "Lead",
+      "email": "ethanyw2@illinois.edu"
+    }
+  ],
+  "website": "https://gamebuilders.acm.illinois.edu/",
+  "links": {
+    "discord": "https://discord.com/invite/2rND6FT"
+  },
+  "blurb": "Gamebuilders is a SIG focused on game development. We host game jams, game dev workshops and sometimes industry panels, but the main focus of the club is our semester projects, which are proposed and worked on by our members. Project leads will then present their project at our MVP and Final showcase to the rest of the club and any attendees! Gamebuilders works on all aspects of game development, including Art, Music, and Game Design, and is open to all skill levels, so don't be afraid to join even with no experience!",
+  "status": "active",
+  "meeting_times": [
+    {
+      "date": "wednesday",
+      "start_time": 1140,
+      "end_time": 1260,
+      "location": "SC 1302"
+    }
+  ]
+}

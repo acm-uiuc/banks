@@ -1,0 +1,10 @@
+status: active
+
+meeting_times:
+  - date: monday
+    start_time: 18:00
+    end_time: 19:20
+    location: SC 1104
+
+blurb: |
+  SIGecom is ACM’s Special Interest Group in Economics and Computation. At SIGecom, our goal is simple: to get people’s hands dirty with real projects—no experience required. Whether you’re an economist curious about coding or a CS student fascinated by markets, everyone is welcome to join and learn by building.

@@ -1,0 +1,39 @@
+{
+  "name": "SIGCHI",
+  "chairs": [
+    {
+      "name": "Aditi Shrivastava",
+      "title": "Lead",
+      "email": "aditi12@illinois.edu"
+    },
+    {
+      "name": "Ethan Nguyen",
+      "title": "Lead",
+      "email": "enguy20@illinois.edu"
+    },
+    {
+      "name": "Josephine Lee",
+      "title": "Lead",
+      "email": "jl221@illinois.edu"
+    },
+    {
+      "name": "Maya Zubak",
+      "title": "Lead",
+      "email": "mbzubak2@illinois.edu"
+    }
+  ],
+  "website": "https://sigchi.acm.illinois.edu/",
+  "links": {
+    "discord": "https://discord.gg/XRShsPCAQ3"
+  },
+  "blurb": "SIGCHI is the special interest group for Human-Computer Interaction. We explore ways to design and make technology that solves problems or enhances the human experience in small ways. Every year, we focus on designing and building a project that incorporates principles of human-centered design and present it at Engineering Open House!",
+  "status": "active",
+  "meeting_times": [
+    {
+      "date": "monday",
+      "start_time": 1020,
+      "end_time": 980,
+      "location": "SC 2405"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "SIGPwny",
+  "chairs": [
+    {
+      "name": "Cameron Asher",
+      "title": "Admin",
+      "email": "caasher2@illinois.edu"
+    },
+    {
+      "name": "Emma Hartman",
+      "title": "Admin",
+      "email": "emmaih2@illinois.edu"
+    },
+    {
+      "name": "Minh Duong",
+      "title": "Admin",
+      "email": "minhd2@illinois.edu"
+    },
+    {
+      "name": "Michael Khalaf",
+      "title": "Admin",
+      "email": "mkhala6@illinois.edu"
+    },
+    {
+      "name": "Nikhil Date",
+      "title": "Admin",
+      "email": "ndate2@illinois.edu"
+    },
+    {
+      "name": "Sam Ruggerio",
+      "title": "Admin",
+      "email": "samuelr6@illinois.edu"
+    }
+  ],
+  "website": "https://sigpwny.com",
+  "links": {
+    "discord": "https://discord.gg/cWcZ6a9"
+  },
+  "blurb": "hallo minh please do the thing here thanks :)",
+  "status": "active",
+  "meeting_times": [
+    {
+      "date": "sunday",
+      "start_time": 1020,
+      "end_time": 1080,
+      "location": "SC 1404"
+    },
+    {
+      "date": "thursday",
+      "start_time": 1080,
+      "end_time": 1140,
+      "location": "DCL 1310"
+    }
+  ]
+}

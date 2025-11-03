@@ -1,0 +1,14 @@
+status: active
+
+meeting_times:
+  - date: sunday
+    start_time: 17:00
+    end_time: 18:00
+    location: SC 1404
+  - date: thursday
+    start_time: 18:00
+    end_time: 19:00
+    location: DCL 1310
+
+blurb: |
+  hallo minh please do the thing here thanks :)

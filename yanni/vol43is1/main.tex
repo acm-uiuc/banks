@@ -1,0 +1,72 @@
+\documentclass{article}
+
+% Use the newspaper template from ../templates/
+\usepackage{../templates/newspaper}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{picinpar}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{needspace}
+\usepackage{qrcode}  % For QR codes in print mode
+\usepackage{xcolor}  % For QR code color control
+
+% Configure hyperref for better link appearance
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+% Date and volume/issue information
+\date{October 31, 2025}
+\currentvolume{43}
+\currentissue{1}
+
+% Set header name
+\SetHeaderName{Banks of the Boneyard}
+
+% Set paper details
+\SetPaperLocation{Urbana, IL}
+\SetPaperPrice{FREE}
+
+% Set logos (adjust paths as needed)
+\SetPaperLogo{./logo/banks-logo.png}
+\SetLeftLogo{./logo/acm-logo.png}
+
+\begin{document}
+
+% Title page with masthead
+\maketitle
+
+% Start multi-column layout for TOC and Events
+\begin{multicols}{2}
+
+% Table of Contents in left column
+\input{./content/toc.tex}
+
+% Upcoming Events in right column  
+\input{./content/events.tex}
+
+\end{multicols}
+
+% Letter from the Chair (full width, still on first page)
+\input{./content/letter.tex}
+
+% Page break before articles
+\newpage
+
+% Start multi-column layout for articles
+\begin{multicols}{2}
+
+% Articles (excluding letter from chair)
+\input{./content/articles.tex}
+
+\end{multicols}
+
+% Directory section (starts on new page, has its own multicols)
+\input{./content/directory.tex}
+
+\end{document}
