@@ -27,10 +27,12 @@
 
 % Set header name
 \SetHeaderName{Banks of the Boneyard}
+\SetSubHeaderName{The Journal of the Association of Computing Machinery at the University of Illinois Urbana-Champaign}
 
 % Set paper details
 \SetPaperLocation{Urbana, IL}
-\SetPaperPrice{FREE}
+% \SetPaperPrice{FREE}
+\SetPaperUrl{https://banks.acm.illinois.edu}
 
 % Set logos (adjust paths as needed)
 \SetPaperLogo{./logo/banks-logo.png}
@@ -54,6 +56,22 @@
 
 % Letter from the Chair (full width, still on first page)
 \input{./content/letter.tex}
+
+% Footer
+\noindent \fcolorbox{}{lightgray}{
+\begin{minipage}{0.45\linewidth}
+    \raggedright
+    {\LARGE Get Featured in Banks!\par}
+    Want to submit an article to Banks? Send your article to banks@acm.illinois.edu
+\end{minipage}
+\hspace{0.1\linewidth}
+\begin{minipage}{0.45\linewidth}
+    \raggedright
+    {\Large Editors\par}
+    Yanni Zhuang\par
+    Minh Duong
+\end{minipage}
+}
 
 % Page break before articles
 \newpage

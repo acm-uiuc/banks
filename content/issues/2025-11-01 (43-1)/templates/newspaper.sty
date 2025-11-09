@@ -50,10 +50,14 @@
 	\def\@leftlogo{#1}}
 \newcommand\SetHeaderName[1]{%
 	\def\@headername{#1}}
+\newcommand\SetSubHeaderName[1]{%
+	\def\@subheadername{#1}}
 \newcommand\SetPaperLocation[1]{%
 	\def\@paperlocation{#1}}
 \newcommand\SetPaperPrice[1]{%
 	\def\@paperprice{#1}}
+\newcommand\SetPaperUrl[1]{%
+	\def\@paperurl{#1}}
 
 
 %%%%%%%%%%% Redefine \maketitle     %%%%%%%
@@ -75,13 +79,18 @@
 \raggedleft
 \textbf{\footnotesize \@paperlocation}
 \end{minipage}
-\vspace*{-0.05in}
+\vspace*{-0.25in}
+
+\begin{center}
+	\noindent \small{\@subheadername}
+\end{center}
+\vspace*{-0.15in}
 
 \noindent\rule[0pt]{\textwidth}{0.5pt}\\
 % Fixed centering using minipages with equal width
 \noindent\begin{minipage}[t]{2.2in}
 \raggedright
-{\small VOL.\MakeUppercase{\arabic{volume}}\ldots Iss.\arabic{issue}}
+{\small Volume \arabic{volume}, Issue \arabic{issue}}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{2.6in}
@@ -90,8 +99,10 @@
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{2.2in}
+% \raggedleft
+% {\small\MakeUppercase{\@paperprice}}
 \raggedleft
-{\small\MakeUppercase{\@paperprice}}
+{\small \@paperurl}
 \end{minipage}\\
 \rule[6pt]{\textwidth}{1.2pt}
 \pagestyle{plain}
@@ -105,7 +116,7 @@
 			{\parbox{\textwidth}{\vspace*{4pt}
 			\noindent\begin{minipage}[t]{1.8in}
 			\raggedright
-			{\small VOL.\MakeUppercase{\arabic{volume}}\ldots Iss.\arabic{issue}}
+			{\small Vol. \arabic{volume}, Iss. \arabic{issue}}
 			\end{minipage}%
 			\hfill
 			\begin{minipage}[t]{3.4in}
@@ -128,7 +139,7 @@
 \newcommand\headline[1]{\begin{center} #1\\ %
 			\rule[3pt]{0.4\hsize}{0.5pt}\\ \end{center} \par}
 \newcommand\byline[2]{\begin{center} #1 \\%
-			{\footnotesize\bf By \MakeUppercase{#2}} \\ %
+			{\footnotesize\bf By #2} \\ %
 			\rule[3pt]{0.4\hsize}{0.5pt}\\ \end{center} \par}
 \newcommand\closearticle{{\begin{center}\rule[6pt]{\hsize}{1pt}\vspace*{-16pt}
 			\rule{\hsize}{0.5pt}\end{center}}}

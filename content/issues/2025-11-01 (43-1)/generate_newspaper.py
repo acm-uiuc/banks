@@ -255,7 +255,7 @@ class NewspaperGenerator:
         
         # Format the byline
         if authors:
-            author_str = ', '.join(authors).upper()
+            author_str = ', '.join(authors)
             content.append(f'\\byline{{\\textbf{{\\Large {title}}}}}{{{author_str}}}')
         else:
             content.append(f'\\headline{{\\textbf{{\\Large {title}}}}}')
@@ -302,7 +302,7 @@ class NewspaperGenerator:
             
             # Format the byline
             if authors:
-                author_str = ', '.join(authors).upper()
+                author_str = ', '.join(authors)
                 content.append(f'\\byline{{\\textbf{{\\Large {title}}}}}{{{author_str}}}')
             else:
                 content.append(f'\\headline{{\\textbf{{\\Large {title}}}}}')
