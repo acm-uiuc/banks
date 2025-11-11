@@ -43,6 +43,13 @@
 % Title page with masthead
 \maketitle
 
+\noindent \begin{minipage}{\textwidth}
+\centering {\fontsize{60}{66} \textbf{BANKS RETURNS}}
+\end{minipage}\par
+
+% Letter from the Chair (full width, still on first page)
+\input{./content/letter.tex}
+
 % Start multi-column layout for TOC and Events
 \begin{multicols}{2}
 
@@ -53,9 +60,6 @@
 \input{./content/events.tex}
 
 \end{multicols}
-
-% Letter from the Chair (full width, still on first page)
-\input{./content/letter.tex}
 
 % Footer
 \noindent \fcolorbox{}{lightgray}{
