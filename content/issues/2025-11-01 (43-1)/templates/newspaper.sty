@@ -112,11 +112,12 @@
 \renewcommand{\ps@plain}{%
 		\renewcommand\@oddfoot{}%					% empty recto footer
 		\let\@evenfoot\@oddfoot						% empty verso footer
-		\renewcommand\@evenhead
+		\renewcommand\@oddhead
 			{\parbox{\textwidth}{\vspace*{4pt}
 			\noindent\begin{minipage}[t]{1.8in}
 			\raggedright
-			{\small Vol. \arabic{volume}, Iss. \arabic{issue}}
+			% {\small Vol. \arabic{volume}, Iss. \arabic{issue}}
+			~
 			\end{minipage}%
 			\hfill
 			\begin{minipage}[t]{3.4in}
@@ -130,9 +131,25 @@
 			\end{minipage}\\
 			\rule{\textwidth}{0.5pt}
 			\vspace*{12pt}}}%
-		\let\@oddhead\@evenhead}
-		
-		
+		\renewcommand\@evenhead
+			{\parbox{\textwidth}{\vspace*{4pt}
+			\noindent\begin{minipage}[t]{1.8in}
+			\raggedright
+			\textrm{\thepage}
+			\end{minipage}%
+			\hfill
+			\begin{minipage}[t]{3.4in}
+			\centering
+			\normalfont\textbf{\@headername}\quad{\small Vol. \arabic{volume}, Iss. \arabic{issue}}
+			\end{minipage}%
+			\hfill
+			\begin{minipage}[t]{1.8in}
+			\raggedleft
+			% {\small Vol. \arabic{volume}, Iss. \arabic{issue}}
+			~
+			\end{minipage}\\
+			\rule{\textwidth}{0.5pt}
+			\vspace*{12pt}}}}
 
 %%%%%%%%%%%  Headline (with byline) command  %%%%%%%%%
 
