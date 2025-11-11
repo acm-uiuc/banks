@@ -63,6 +63,14 @@ class NewspaperGenerator:
                 return yaml.safe_load(f)
         return {'events': []}
     
+    def load_horoscope(self):
+        """Load horoscope data"""
+        horoscope_path = self.base_dir / 'horoscope.yaml'
+        if horoscope_path.exists():
+            with open(horoscope_path, 'r', encoding='utf-8') as f:
+                return yaml.safe_load(f)
+        return {'horoscope': []}
+    
     def markdown_to_latex(self, markdown_text, is_article=False):
         """Convert markdown to LaTeX
         
@@ -76,20 +84,20 @@ class NewspaperGenerator:
         text = markdown_text
         
         # Convert <br/> and <br> tags to line breaks - do this early before escaping
-        text = re.sub(r'<br\s*/?>', r'§§§LINEBREAK§§§', text, flags=re.IGNORECASE)
+        text = re.sub(r'<br\s*/?>', r'Â§Â§Â§LINEBREAKÂ§Â§Â§', text, flags=re.IGNORECASE)
         
         # Headers - do first before escaping
-        text = re.sub(r'^### (.+)$', r'§§§SUBSUB:\1§§§', text, flags=re.MULTILINE)
-        text = re.sub(r'^## (.+)$', r'§§§SUB:\1§§§', text, flags=re.MULTILINE)
-        text = re.sub(r'^# (.+)$', r'§§§SEC:\1§§§', text, flags=re.MULTILINE)
+        text = re.sub(r'^### (.+)$', r'Â§Â§Â§SUBSUB:\1Â§Â§Â§', text, flags=re.MULTILINE)
+        text = re.sub(r'^## (.+)$', r'Â§Â§Â§SUB:\1Â§Â§Â§', text, flags=re.MULTILINE)
+        text = re.sub(r'^# (.+)$', r'Â§Â§Â§SEC:\1Â§Â§Â§', text, flags=re.MULTILINE)
         
         # Bold and italic - use placeholders
         bold_pattern = r'\*\*(.+?)\*\*'
-        text = re.sub(bold_pattern, r'§§§BOLD:\1§§§', text)
+        text = re.sub(bold_pattern, r'Â§Â§Â§BOLD:\1Â§Â§Â§', text)
         
         # Replace *text* with italic placeholder
         italic_pattern = r'\*(.+?)\*'
-        text = re.sub(italic_pattern, r'§§§ITALIC:\1§§§', text)
+        text = re.sub(italic_pattern, r'Â§Â§Â§ITALIC:\1Â§Â§Â§', text)
         
         # Images - convert markdown image syntax to placeholders FIRST (before links)
         image_pattern = r'!\[([^\]]*)\]\(([^\)]+)\)'
@@ -100,12 +108,12 @@ class NewspaperGenerator:
             if image_path.startswith('./'):
                 image_path = image_path[2:]
             # Store the image path with a special marker to avoid escaping underscores later
-            return f'§§§IMAGE:{image_path}§§§'
+            return f'Â§Â§Â§IMAGE:{image_path}Â§Â§Â§'
         text = re.sub(image_pattern, replace_image, text)
         
         # Links - convert markdown links to placeholders
         link_pattern = r'\[([^\]]+)\]\(([^\)]+)\)'
-        text = re.sub(link_pattern, r'§§§LINK:\1§|§\2§§§', text)
+        text = re.sub(link_pattern, r'Â§Â§Â§LINK:\1Â§|Â§\2Â§Â§Â§', text)
         
         # Lists - convert bullet points to placeholders
         in_list = False
@@ -114,17 +122,17 @@ class NewspaperGenerator:
         for line in lines:
             if re.match(r'^\s*[\*\-]\s+', line):
                 if not in_list:
-                    new_lines.append('§§§BEGINLIST§§§')
+                    new_lines.append('Â§Â§Â§BEGINLISTÂ§Â§Â§')
                     in_list = True
                 item = re.sub(r'^\s*[\*\-]\s+', '', line)
-                new_lines.append(f'§§§ITEM:{item}§§§')
+                new_lines.append(f'Â§Â§Â§ITEM:{item}Â§Â§Â§')
             else:
                 if in_list:
-                    new_lines.append('§§§ENDLIST§§§')
+                    new_lines.append('Â§Â§Â§ENDLISTÂ§Â§Â§')
                     in_list = False
                 new_lines.append(line)
         if in_list:
-            new_lines.append('§§§ENDLIST§§§')
+            new_lines.append('Â§Â§Â§ENDLISTÂ§Â§Â§')
         text = '\n'.join(new_lines)
         
         # Now escape special LaTeX characters
@@ -141,34 +149,34 @@ class NewspaperGenerator:
         
         # Don't escape special characters inside href URLs or image paths
         # First, temporarily protect href content
-        href_pattern = r'§§§LINK:(.+?)§\|§(.+?)§§§'
+        href_pattern = r'Â§Â§Â§LINK:(.+?)Â§\|Â§(.+?)Â§Â§Â§'
         hrefs = []
         def save_href(match):
             hrefs.append((match.group(1), match.group(2)))
-            return f'§§§HREFPLACEHOLDER{len(hrefs)-1}§§§'
+            return f'Â§Â§Â§HREFPLACEHOLDER{len(hrefs)-1}Â§Â§Â§'
         text = re.sub(href_pattern, save_href, text)
         
         # Also protect image paths from escaping
-        image_placeholder_pattern = r'§§§IMAGE:(.+?)§§§'
+        image_placeholder_pattern = r'Â§Â§Â§IMAGE:(.+?)Â§Â§Â§'
         images = []
         def save_image(match):
             images.append(match.group(1))
-            return f'§§§IMAGEPLACEHOLDER{len(images)-1}§§§'
+            return f'Â§Â§Â§IMAGEPLACEHOLDER{len(images)-1}Â§Â§Â§'
         text = re.sub(image_placeholder_pattern, save_image, text)
         
         for char, replacement in special_chars.items():
             text = text.replace(char, replacement)
         
         # Now convert placeholders to actual LaTeX
-        text = re.sub(r'§§§SUBSUB:(.+?)§§§', r'\\subsubsection*{\1}', text)
-        text = re.sub(r'§§§SUB:(.+?)§§§', r'\\subsection*{\1}', text)
-        text = re.sub(r'§§§SEC:(.+?)§§§', r'\\section*{\1}', text)
-        text = re.sub(r'§§§BOLD:(.+?)§§§', r'\\textbf{\1}', text)
-        text = re.sub(r'§§§ITALIC:(.+?)§§§', r'\\textit{\1}', text)
+        text = re.sub(r'Â§Â§Â§SUBSUB:(.+?)Â§Â§Â§', r'\\subsubsection*{\1}', text)
+        text = re.sub(r'Â§Â§Â§SUB:(.+?)Â§Â§Â§', r'\\subsection*{\1}', text)
+        text = re.sub(r'Â§Â§Â§SEC:(.+?)Â§Â§Â§', r'\\section*{\1}', text)
+        text = re.sub(r'Â§Â§Â§BOLD:(.+?)Â§Â§Â§', r'\\textbf{\1}', text)
+        text = re.sub(r'Â§Â§Â§ITALIC:(.+?)Â§Â§Â§', r'\\textit{\1}', text)
         
         # Convert line break placeholders to LaTeX line breaks
         # Using \vspace{0.5em} which adds vertical space and works reliably in all contexts
-        text = text.replace('§§§LINEBREAK§§§', '\\vspace{0.5em}')
+        text = text.replace('Â§Â§Â§LINEBREAKÂ§Â§Â§', '\\vspace{0.5em}')
         
         # Restore hrefs and handle # in URLs
         def restore_href(match):
@@ -192,19 +200,19 @@ class NewspaperGenerator:
                        f'\\end{{center}}')
             else:
                 return f'\\href{{{url}}}{{{link_text}}}'
-        text = re.sub(r'§§§HREFPLACEHOLDER(\d+)§§§', restore_href, text)
+        text = re.sub(r'Â§Â§Â§HREFPLACEHOLDER(\d+)Â§Â§Â§', restore_href, text)
         
         # Restore image placeholders
         def restore_image(match):
             idx = int(match.group(1))
-            return f'§§§IMAGE:{images[idx]}§§§'
-        text = re.sub(r'§§§IMAGEPLACEHOLDER(\d+)§§§', restore_image, text)
+            return f'Â§Â§Â§IMAGE:{images[idx]}Â§Â§Â§'
+        text = re.sub(r'Â§Â§Â§IMAGEPLACEHOLDER(\d+)Â§Â§Â§', restore_image, text)
         
         # Convert image placeholders - note: captions are handled separately as italic text following the image
-        text = re.sub(r'§§§IMAGE:(.+?)§§§', r'\\begin{center}\\includegraphics[width=0.9\\columnwidth]{./articles/images/\1}\\end{center}', text)
-        text = text.replace('§§§BEGINLIST§§§', '\\begin{itemize}')
-        text = text.replace('§§§ENDLIST§§§', '\\end{itemize}')
-        text = re.sub(r'§§§ITEM:(.+?)§§§', r'\\item \1', text)
+        text = re.sub(r'Â§Â§Â§IMAGE:(.+?)Â§Â§Â§', r'\\begin{center}\\includegraphics[width=0.9\\columnwidth]{./articles/images/\1}\\end{center}', text)
+        text = text.replace('Â§Â§Â§BEGINLISTÂ§Â§Â§', '\\begin{itemize}')
+        text = text.replace('Â§Â§Â§ENDLISTÂ§Â§Â§', '\\end{itemize}')
+        text = re.sub(r'Â§Â§Â§ITEM:(.+?)Â§Â§Â§', r'\\item \1', text)
         
         return text
     
@@ -287,8 +295,16 @@ class NewspaperGenerator:
             if not article:
                 continue
             
-            # Add needspace to prevent orphaned headers (ensure at least 5 lines stay together)
-            content.append('\\needspace{5\\baselineskip}')
+            # Check if article starts with an image
+            article_content = article.get('content', '')
+            starts_with_image = article_content.strip().startswith('![')
+            
+            # Use larger needspace if article starts with image
+            # This reserves space for: header + image + at least one paragraph
+            if starts_with_image:
+                content.append('\\needspace{20\\baselineskip}')
+            else:
+                content.append('\\needspace{5\\baselineskip}')
             
             # Add label for TOC reference
             content.append(f'\\label{{article:{article_name}}}')
@@ -308,7 +324,6 @@ class NewspaperGenerator:
                 content.append(f'\\headline{{\\textbf{{\\Large {title}}}}}')
             
             # Article content
-            article_content = article.get('content', '')
             latex_content = self.markdown_to_latex(article_content, is_article=True)
             content.append(latex_content)
             
@@ -364,6 +379,80 @@ class NewspaperGenerator:
                 if i < len(events) - 1:
                     content.append('\\vspace{0.25cm}')
                     content.append('')
+        
+        content.append('\\vspace{0.2cm}')
+        
+        return '\n'.join(content)
+    
+    def generate_horoscope_tex(self):
+        """Generate the horoscope section LaTeX file"""
+        horoscope_data = self.load_horoscope()
+        content = []
+        
+        # Add label for TOC reference
+        content.append('\\label{horoscope}')
+        content.append('')
+        
+        horoscope_list = horoscope_data.get('horoscope', [])
+        if not horoscope_list:
+            content.append('\\headline{\\textbf{\\LARGE Your Horoscope}}')
+            content.append('\\vspace{0.05cm}')
+            content.append('')
+            content.append('\\noindent\\textit{No horoscope available this issue.}')
+        else:
+            # Extract author from the list (it's a separate dict item)
+            author = None
+            question = None
+            responses = []
+            
+            for item in horoscope_list:
+                if 'author' in item:
+                    author = item['author']
+                if 'question' in item:
+                    question = item['question']
+                if 'response' in item:
+                    responses = item['response']
+            
+            # Display title with byline if author exists
+            if author:
+                author_upper = author.upper()
+                content.append(f'\\byline{{\\textbf{{\\LARGE Your Horoscope}}}}{{{author_upper}}}')
+            else:
+                content.append('\\headline{\\textbf{\\LARGE Your Horoscope}}')
+            
+            content.append('\\vspace{0.05cm}')
+            content.append('')
+            
+            # Display the question
+            if question:
+                content.append(f'\\noindent\\textbf{{\\large {question}}}')
+                content.append('')
+                content.append('\\vspace{0.3cm}')
+                content.append('')
+            
+            # Start 2-column layout for zodiac signs
+            content.append('\\begin{multicols}{2}')
+            content.append('')
+            
+            # Display each zodiac sign's response
+            for i, response_item in enumerate(responses):
+                for sign, text in response_item.items():
+                    # Zodiac sign in bold
+                    content.append(f'\\noindent\\textbf{{{sign}:}} {text}')
+                    content.append('')
+                    
+                    # Add spacing between entries
+                    if i < len(responses) - 1:
+                        content.append('\\vspace{0.2cm}')
+                        content.append('')
+                    
+                    # Force column break after the 6th zodiac sign (Virgo)
+                    if i == 5:  # After Virgo (0-indexed, so 5 is the 6th)
+                        content.append('\\columnbreak')
+                        content.append('')
+            
+            # End 2-column layout
+            content.append('\\end{multicols}')
         
         content.append('\\vspace{0.2cm}')
         
@@ -639,6 +728,9 @@ class NewspaperGenerator:
             except:
                 pass
         
+        content.append('\\noindent Your Horoscope \\dotfill \\pageref{horoscope}')
+        content.append('')
+        
         content.append('\\noindent ACM @ UIUC Directory \\dotfill \\pageref{directory}')
         content.append('')
         
@@ -663,6 +755,12 @@ class NewspaperGenerator:
         with open(output_path / 'events.tex', 'w', encoding='utf-8') as f:
             f.write(events_tex)
         
+        # Generate horoscope
+        print("Generating horoscope...")
+        horoscope_tex = self.generate_horoscope_tex()
+        with open(output_path / 'horoscope.tex', 'w', encoding='utf-8') as f:
+            f.write(horoscope_tex)
+        
         # Generate letter from the chair
         print("Generating letter from the chair...")
         letter_tex = self.generate_letter_tex()
@@ -681,10 +779,11 @@ class NewspaperGenerator:
         with open(output_path / 'directory.tex', 'w', encoding='utf-8') as f:
             f.write(directory_tex)
         
-        print(f"\n✓ All files generated in {output_path}/")
+        print(f"\nAll files generated in {output_path}/")
         print("\nGenerated files:")
         print("  - toc.tex")
         print("  - events.tex")
+        print("  - horoscope.tex")
         print("  - letter.tex")
         print("  - articles.tex")
         print("  - directory.tex")
@@ -710,9 +809,9 @@ if __name__ == '__main__':
         generator.generate_all(f'{args.base_dir}/content')
         
         if args.print_mode:
-            print("\n📄 Generated in PRINT mode (non-clickable black links)")
+            print("\nGenerated in PRINT mode (non-clickable black links)")
         else:
-            print("\n🌐 Generated in ONLINE mode (clickable blue links)")
+            print("\nGenerated in ONLINE mode (clickable blue links)")
             
     except Exception as e:
         print(f"Error: {e}")

@@ -1,7 +1,7 @@
 title:
   Why NLP Matters More than Ever
 author:
-  - Vinay Rajagopalan
+  - Kush Bhardwaj
 
 content: |
   You have probably heard of the term “natural language processing.” Maybe you think of it as a buzzword - isn’t it just ChatGPT, or a subset of artificial intelligence? However, it is a lot bigger than that. NLP is not just a subset of AI; it is the layer that makes AI usable by humans. It is the reason you are able to interact with the AI models you love and use. At its core, NLP is about teaching computers to interpret, structure, and generate language in a way that captures meaning and intention. It is not about flashy demos or the “state-of-the-art.” Rather, it is about modelling and making sense of the understandability and interactability itself. So if NLP is bigger than chatbots, what does it actually do, and why does it matter for computer scientists today?

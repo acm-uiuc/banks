@@ -1,0 +1,16 @@
+horoscope:
+  - author: Emma Hartman
+  - question: How are you holding up this semester?
+    response:
+      - Aries: You started studying for your midterms at 2 a.m., but you drank three Monsters and "locked in", so they'll probably come back okay?
+      - Taurus: You've been camped out in the ACM back room for long enough that you befriended the janitors. You're seriously considering just taking the night shift with them.
+      - Gemini: When you started studying the night before your midterms, you said you'd just "skim the slides". Instead, you read 300 pages of the course textbook. Only the parts you didn't read were on the exam.
+      - Cancer: You've migrated your notes from Goodnotes to Notion to Org-mode, and halfway through turning it all into Anki cards, you finally realized the problem might not be your workflow.
+      - Leo: After a rough midterm, you loudly declared that you "don't even care about grades", then immediately went back to checking Canvas four times an hour.
+      - Virgo: You made a study schedule so detailed it could be an incident response plan. Unfortunately, you finished it the day of the exam.
+      - Libra: You can't decide which midterm to study for, so you're starting drama in all of their Campuswire forums. Somehow, this feels more productive in the moment.
+      - Scorpio: You're carrying three group projects on your back after they promised to pick up the slack this semester. You'll never forgive them for what they've done.
+      - Sagittarius: You told your friends you'd meet them at Grainger, but you're currently at KAMS attempting to organize an integration bee. It's going surprisingly well!
+      - Capricorn: You haven't left your room in four days, but on the bright side, your GitHub contribution graph looks stellar!
+      - Aquarius: You built a comprehensive script in an attempt to optimize your workflow, but now you're spending all your time debugging it.
+      - Pisces: You've been working on side projects and kind of forgot your homework exists. You've convinced yourself that your final will "balance out" your missing homework assignments. It will not.

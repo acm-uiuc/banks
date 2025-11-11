@@ -6,7 +6,7 @@ author:
 content: |
   ![sigplan](sigplan.png)
       
-  One of the more interesting consequences of interactive theorem proving in recent years has been the realization of its potential both to enhance collaboration among professional mathematicians and bridge the gap of professional mathematics for software engineers and others from less traditional academic backgrounds. 
+  In recent years, interactive theorem proving has revealed unexpected potential, both enhancing collaboration among professional mathematicians and making the field accessible to software engineers and those from less traditional academic backgrounds.
   
   Many of the benefits of mathematicians adopting such technologies are obvious - digitizing a library of theorems would open it up to search and other automotive tools, which could then be used to assist in the building of more complicated modern proofs. Should we reach the point where modern research level proofs are built with or at least checked by a theorem prover, ensuring correctness would no longer be a matter of faith in the author or in the wait for peer review. 
   
