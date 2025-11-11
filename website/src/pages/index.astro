@@ -1,29 +1,61 @@
 ---
 import Layout from '@/layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getAllArticles } from '@/lib/collections';
 
-const articles = await getCollection('articles');
-const issues = (await getCollection('issues')).sort((a, b) => b.data.date - a.data.date);
+const articles = await getAllArticles();
+const sortedArticles = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 <Layout>
-  <p class="font-semibold italic text-4xl uppercase">Banks</p>
-  <h1 class="font-bold text-2xl">Articles</h1>
-  <ul>
-    {articles.map((article) => (
-      <li>
-        <a href="#">
-          {article.data.title}
-        </a>
-      </li>
-    ))}
+  <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {sortedArticles
+      .filter((article) => !article.data.tags?.includes('sig-updates'))
+      .slice(0, 4)
+      .map((article) => (
+        <li>
+          <a href={article.fullSlug} class="hover:underline">
+            <span class="font-headline font-bold text-3xl">
+              {article.data.title}
+            </span>
+            <span class="block text-sm text-gray-500">
+              {article.data.byline || (article.data.authors && article.data.authors.length > 0 ? `By ${article.data.authors.length > 1 ? article.data.authors.slice(0, -1).join(', ') + ' and ' + article.data.authors.slice(-1) : article.data.authors[0]}` : "By Anonymous")}
+            </span>
+            <span class="block text-sm text-gray-500">
+              {new Date(article.data.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+          </a>
+        </li>
+      ))
+    }
   </ul>
-  <h1 class="font-bold text-2xl mt-8">Issues</h1>
-  <ul>
-    {issues.map((issue) => (
-      <li>
-        <a href="#">
-          {`${issue.data.date.toISOString().split('T')[0]} - Volume ${issue.data.volume}, Issue ${issue.data.issue} [${issue.data.print ? Object.keys(issue.data.print).join(', ') : 'No Print Available'}]`}
-        </a>
-      </li>
-    ))}
+  <hr class="my-4" />
+  <a href="/articles?tag=sig-updates" class="hover:underline">
+    <h2 class="font-bold text-2xl">SIG Updates</h2>
+  </a>
+  <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+    {sortedArticles
+      .filter((article) => article.data.tags?.includes('sig-updates'))
+      .slice(0, 6)
+      .map((article) => (
+        <li>
+          <a href={article.fullSlug} class="hover:underline">
+            <span class="font-headline font-bold text-xl">{article.data.title}</span>
+            <span class="block text-sm text-gray-500">
+              {article.data.byline || (article.data.authors && article.data.authors.length > 0 ? `By ${article.data.authors.length > 1 ? article.data.authors.slice(0, -1).join(', ') + ' and ' + article.data.authors.slice(-1) : article.data.authors[0]}` : "By Anonymous")}
+            </span>
+            <span class="block text-sm text-gray-500">
+              {new Date(article.data.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 </Layout>

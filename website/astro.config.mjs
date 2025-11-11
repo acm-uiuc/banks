@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
@@ -7,9 +8,13 @@ export default defineConfig({
   site: 'https://banks.acm.illinois.edu',
   output: 'static',
   trailingSlash: 'never',
+
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+    ],
   },
+
   experimental: {
     // https://docs.astro.build/en/reference/experimental-flags/fonts/
     fonts: [
@@ -21,4 +26,6 @@ export default defineConfig({
       }
     ]
   },
+
+  integrations: [react()],
 });

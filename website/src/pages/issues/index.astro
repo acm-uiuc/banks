@@ -1,0 +1,39 @@
+---
+import Layout from "@/layouts/Base.astro";
+import { getVolumesToIssuesMap } from '@/lib/collections';
+
+const volumesIssuesMap = await getVolumesToIssuesMap();
+// Sort volumes/issues in descending order by date
+const sortedVolumes = Object.entries(volumesIssuesMap).sort(([, issuesA], [, issuesB]) => {
+  const latestIssueA = issuesA.reduce((latest, issue) => issue.data.date > latest.data.date ? issue : latest, issuesA[0]);
+  const latestIssueB = issuesB.reduce((latest, issue) => issue.data.date > latest.data.date ? issue : latest, issuesB[0]);
+  return latestIssueB.data.date.getTime() - latestIssueA.data.date.getTime();
+});
+---
+<Layout
+  title="Issues"
+>
+  <h1 class="font-bold text-4xl">Issues</h1>
+  <ul>
+    {sortedVolumes.map(([volume, issues]) => {
+      // List each issue under the volume
+      const sortedIssues = issues.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+      return (
+        <li class="mb-6">
+          <h2 class="font-semibold text-2xl mb-2">Volume {volume}</h2>
+          <ul>
+            {sortedIssues.map((issue) => (
+              <li>
+                <a href={issue.fullSlug} class="hover:underline">
+                  {issue.data.date.toISOString().split('T')[0]} -
+                  Volume {volume}, Issue {issue.data.issue}
+                  [{issue.data.print ? Object.keys(issue.data.print).join(', ') : 'No Print Available'}]
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      );
+    })}
+  </ul>
+</Layout>

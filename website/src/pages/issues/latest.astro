@@ -1,0 +1,9 @@
+---
+import { getAllIssues } from '@/lib/collections';
+
+const issues = await getAllIssues();
+const sortedIssues = issues.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const latestIssue = sortedIssues[0];
+
+return Astro.rewrite(latestIssue.fullSlug);
+---

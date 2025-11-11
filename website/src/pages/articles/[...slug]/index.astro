@@ -1,0 +1,40 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { getAllArticles } from '@/lib/collections';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getAllArticles();
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface ArticleLink {
+  headline: string;
+  url: string;
+}
+
+const { article } = Astro.props;
+
+const { Content } = await render(article);
+const data = article.data;
+---
+<Layout
+  title={data.title}
+>
+  <article class="prose prose-lg mx-auto my-8 px-4 dark:prose-invert">
+    <header>
+      <h1>{data.title}</h1>
+      <p class="text-sm text-gray-500">
+        Published on {new Date(data.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </header>
+    <Content />
+  </article>
+</Layout>

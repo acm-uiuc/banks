@@ -1,0 +1,17 @@
+---
+import { BanksHorizontalLogo } from "@/components/BanksLogo";
+---
+
+<footer class="container flex flex-col w-full mt-4">
+  <span class="w-full mb-6">
+    <hr class="mb-1" />
+    <hr />
+  </span>
+  <a href="/">
+    <BanksHorizontalLogo className="w-fit max-h-16" />
+  </a>
+  <div class="flex flex-col">
+    <a href="/about" class="hover:underline">About</a>
+  </div>
+  <span class="text-center my-4">&copy; {new Date().getFullYear()} ACM@UIUC.</span>
+</footer>

@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --font-headline: 'Bodoni Moda', serif;
+}
+
+@utility container {
+  @apply mx-auto px-4; 
+}

@@ -1,0 +1,37 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { getAllIssues } from '@/lib/collections';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const issues = await getAllIssues();
+  return issues.map((issue) => ({
+    params: {
+      volume: issue.data.volume.toString(),
+      issue: issue.slug,
+    },
+    props: { issue },
+  }));
+}
+const { issue } = Astro.props;
+
+const { Content } = await render(issue);
+const data = issue.data;
+---
+<Layout
+  title={`Volume ${data.volume}, Issue ${data.issue}`}
+>
+  <div>
+    <header>
+      <h1 class="font-bold text-4xl">Volume {data.volume}, Issue {data.issue}</h1>
+      <p class="text-sm">
+        Published on {new Date(data.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </header>
+    <Content />
+  </div>
+</Layout>

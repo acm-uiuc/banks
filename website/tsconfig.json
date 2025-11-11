@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@articles/*": ["../content/*"]
+      "@content/*": ["../content/*"],
     },
     "target": "es2022"
   },

@@ -1,0 +1,41 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { getVolumesToIssuesMap } from '@/lib/collections';
+
+export async function getStaticPaths() {
+  // Map volumes to their issues
+  const volumeIssueMap = await getVolumesToIssuesMap();
+  return Object.entries(volumeIssueMap).map(([volume, issues]) => ({
+    params: { volume },
+    props: { volume, issues },
+  }));
+}
+const { volume, issues } = Astro.props;
+---
+
+<Layout
+  title={`Volume ${volume}`}
+>
+  <issue class="prose prose-lg mx-auto my-8 px-4 dark:prose-invert">
+    <header>
+      <h1>Volume {volume}</h1>
+    </header>
+    {issues.map((issue) => (
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold mb-2">Issue {issue.data.issue}</h2>
+        <p class="text-sm text-gray-500 mb-4">
+          Published on {new Date(issue.data.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </p>
+        <div>
+          <a href={issue.fullSlug} class="text-blue-600 hover:underline">
+            Read Issue {issue.data.issue}
+          </a>
+        </div>
+      </div>
+    ))}
+  </issue>
+</Layout>

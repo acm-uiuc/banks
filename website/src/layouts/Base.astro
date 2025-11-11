@@ -1,6 +1,8 @@
 ---
 import '@/styles/global.css';
 import BaseHead from '@/components/BaseHead.astro';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer.astro';
 
 import type { Props as BaseHeadProps } from '@/components/BaseHead.astro';
 export interface Props extends BaseHeadProps { }
@@ -14,6 +16,12 @@ const props = Astro.props as Props;
     <BaseHead {...props} />
   </head>
   <body>
-    <slot />
+    <div class="flex flex-col min-h-screen">
+      <Navbar client:load />
+      <div class="container grow">
+        <slot />
+      </div>
+    </div>
+    <Footer />
   </body>
 </html>
