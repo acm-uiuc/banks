@@ -29,21 +29,21 @@ directory_order:
   - mentorship_committee
   - reflections_projections
   - hackillinois
-  - sigpwny
-  - sigchi
   - gamebuilders
-  - sigaida
-  - siggraph
+  - glug
   - icpc
+  - sigaida
+  - sigarch
+  - sigchi
+  - sigecom
+  - siggraph
+  - sigma
   - sigmobile
   - sigmusic
-  - glug
   - signll
-  - sigma
-  - sigquantum
-  - sigecom
   - sigplan
   - sigpolicy
-  - sigarch
+  - sigpwny
+  - sigquantum
   - sigrobotics
   - sigtricity

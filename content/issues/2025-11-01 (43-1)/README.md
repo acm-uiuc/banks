@@ -23,7 +23,6 @@ horoscope:
       - {One entry per Zodiac sign}
 ```
 - `/events.yaml`: Upcoming events. Format:
-
 ```yaml
 events:
   - name: "Weekly Social Hour"

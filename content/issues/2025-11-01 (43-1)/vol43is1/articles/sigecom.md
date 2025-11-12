@@ -1,5 +1,5 @@
 title: SIGEcom Updates!
-authors: ['Bhargav Sampathkumaran']
+authors: ['Nate Levkov']
 
 This semester, SIGecom has been diving deep into the intersection of computer science and economics. Each week, we’ve presented on topics ranging from algorithmic trading and optional membership design to game theory in AI, dynamic pricing, and platform economics—exploring how algorithms shape the markets and digital platforms we interact with every day.
 

@@ -209,7 +209,7 @@ class NewspaperGenerator:
         text = re.sub(r'Â§Â§Â§IMAGEPLACEHOLDER(\d+)Â§Â§Â§', restore_image, text)
         
         # Convert image placeholders - note: captions are handled separately as italic text following the image
-        text = re.sub(r'Â§Â§Â§IMAGE:(.+?)Â§Â§Â§', r'\\begin{center}\\includegraphics[width=0.9\\columnwidth]{./articles/images/\1}\\end{center}', text)
+        text = re.sub(r'Â§Â§Â§IMAGE:(.+?)Â§Â§Â§', r'\\begin{center}\\includegraphics[width=0.82\\columnwidth]{./articles/images/\1}\\end{center}', text)
         text = text.replace('Â§Â§Â§BEGINLISTÂ§Â§Â§', '\\begin{itemize}')
         text = text.replace('Â§Â§Â§ENDLISTÂ§Â§Â§', '\\end{itemize}')
         text = re.sub(r'Â§Â§Â§ITEM:(.+?)Â§Â§Â§', r'\\item \1', text)
