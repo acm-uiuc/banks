@@ -15,8 +15,25 @@ export async function getStaticPaths() {
 }
 const { issue } = Astro.props;
 
+// NOTE: the issue.md file generally only contains front matter and no content, so this would be empty
 const { Content } = await render(issue);
+
 const data = issue.data;
+
+// issue.filePath looks like " ../content/issues/26/2009-09-01 (26-1)/issue.md"
+const issueContentDir = issue.filePath?.split('/').slice(1, -1).join('/') || null;
+
+// construct paths to pdf and source files
+const pdfPath = data.print?.pdf || data.print?.pdf_scan;
+let pdfUrl: string | null = null;
+if (pdfPath) {
+  pdfUrl = `/${issueContentDir}/${pdfPath}`;
+}
+const sourcePath = data.print?.source;
+let sourceUrl: string | null = null;
+if (sourcePath) {
+  sourceUrl = `/${issueContentDir}/${sourcePath}`;
+}
 ---
 <Layout
   title={`Volume ${data.volume}, Issue ${data.issue}`}
@@ -32,6 +49,38 @@ const data = issue.data;
         })}
       </p>
     </header>
-    <Content />
+
+    {pdfUrl && (
+      <div class="mt-8">
+        <iframe
+          src={pdfUrl}
+          class="w-full h-[80vh] border-2 border-gray-300 rounded"
+          title={`Volume ${data.volume}, Issue ${data.issue} PDF`}
+        />
+      </div>
+    )}
+
+    <div class="mt-8">
+      {data.print?.website && (
+        <p class="text-lg">
+          Website: <a href={data.print.website} target="_blank" rel="noopener noreferrer" class="text-blue-600 underline hover:text-blue-800">
+            {data.print.website}
+          </a>
+        </p>
+      )}
+
+      {sourceUrl && (
+        <p class="text-lg">
+          Source: <a href={sourceUrl} class="text-blue-600 underline hover:text-blue-800" download>
+            {data.print?.source}
+          </a>
+        </p>
+      )}
+    </div>
+
+    <div class="mt-8">
+      <Content />
+    </div>
+
   </div>
 </Layout>
