@@ -11,8 +11,8 @@ const sortedArticles = articles.sort((a, b) => b.data.date.getTime() - a.data.da
       .filter((article) => !article.data.tags?.includes('sig-updates'))
       .slice(0, 4)
       .map((article) => (
-        <li>
-          <a href={article.fullSlug} class="hover:underline">
+        <li class="prose">
+          <a href={article.fullSlug} class="no-underline hover:underline">
             <span class="font-headline font-bold text-3xl">
               {article.data.title}
             </span>
@@ -40,8 +40,8 @@ const sortedArticles = articles.sort((a, b) => b.data.date.getTime() - a.data.da
       .filter((article) => article.data.tags?.includes('sig-updates'))
       .slice(0, 6)
       .map((article) => (
-        <li>
-          <a href={article.fullSlug} class="hover:underline">
+        <li class="prose">
+          <a href={article.fullSlug} class="no-underline hover:underline">
             <span class="font-headline font-bold text-xl">{article.data.title}</span>
             <span class="block text-sm text-gray-500">
               {article.data.byline || (article.data.authors && article.data.authors.length > 0 ? `By ${article.data.authors.length > 1 ? article.data.authors.slice(0, -1).join(', ') + ' and ' + article.data.authors.slice(-1) : article.data.authors[0]}` : "By Anonymous")}
