@@ -12,5 +12,6 @@ We will also be hosting three online live events at PredictionsLab.org, each acc
 - April 22nd at 7:00 PM 
 - April 29th at 7:00 PM 
 - May 6th at 7:00 PM 
+
 At each event, $200 in prizes will be awarded to the top-ranking participants, giving you multiple chances to compete and win. Participants can already begin playing for real money as well by participating in longer-term prediction markets that will last a few days to a week. 
 Keep an eye out for updates on PredictionsLab.org and make sure to tune in to the live events and preceding livestreams. We look forward to seeing the results of our study and sharing our findings with the ACM community. To be clear, neither SIGecom nor SIGPolicy encourage gambling or endorse the use of real-money prediction markets. Our interest is purely academic, and this study is an opportunity for students to engage in prediction market dynamics in a controlled simulation.

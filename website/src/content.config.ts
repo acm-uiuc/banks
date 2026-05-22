@@ -37,7 +37,7 @@ export const collections = {
     // a volume (e.g. `1-quad-day` recurs across volumes), which would collide.
     loader: glob({
       pattern: '**/issue.md',
-      base: './content/issues',
+      base: '../archive',
       generateId: ({ entry }) => entry.replace(/\/issue\.md$/i, ''),
     }),
     schema: () => z.object({

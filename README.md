@@ -13,26 +13,26 @@ The site has two parts:
 ## Repository layout
 
 ```
-website/                 # the Astro site
-  content/               # editorial content (read by the content collections)
-    current/             # the CURRENT issue — web articles
-      <article>.md       # frontmatter: title, authors, … (see below)
-      images/            # images referenced by the articles
-    issues/              # the ARCHIVE — typeset back issues
-      <volume>/<YYYY-MM-DD>-<slug>/   # folder names are shell/URL-safe, no spaces
-        issue.md         # frontmatter only (volume, issue, date, label?, note?, print)
-        <files>.pdf/.ps/…  # the print artifacts referenced by issue.md
-  src/                   # site code (pages, components, collections)
-  public/                # static assets (+ generated public/files/, see below)
-logo/                    # source logo files
+archive/                   # the ARCHIVE — typeset back issues (top-level)
+  <volume>/<YYYY-MM-DD>-<slug>/   # folder names are shell/URL-safe, no spaces
+    issue.md               # frontmatter only (volume, issue, date, label?, note?, print)
+    <files>.pdf/.ps/…      # the print artifacts referenced by issue.md
+website/                   # the Astro site
+  content/current/         # the CURRENT issue — web articles
+    <article>.md           # frontmatter: title, authors, … (see below)
+    images/                # images referenced by the articles
+  src/                     # site code (pages, components, collections)
+  public/                  # static assets (+ generated public/files/, see below)
+logo/                      # source logo files
 ```
 
-Editorial content lives in `website/content/`, kept separate from the site code
-in `website/src/`. (It sits inside the project so Astro's dev server can read the
-article images.) The website reads it through Astro content collections
-(`current`, `archive`), and `website/scripts/collect-archive-assets.mjs`
-publishes only the print files named in each `issue.md` (run automatically
-before `dev`/`build`).
+The **archive** lives in the top-level `archive/` folder — its files are static
+(served via the collector below), so it can sit anywhere. The **current issue**
+lives in `website/content/current/`; it has to be inside the project so Astro's
+dev server can render the article images. The site reads both through Astro
+content collections (`archive`, `current`), and
+`website/scripts/collect-archive-assets.mjs` publishes only the print files named
+in each `issue.md` (run automatically before `dev`/`build`).
 
 ## Developing
 
@@ -66,8 +66,8 @@ number, date }`) when the issue changes.
 
 ## Adding an issue to the archive
 
-Create a folder named `website/content/issues/<volume>/<YYYY-MM-DD>-<slug>/` (no
-spaces or parentheses) with an `issue.md`:
+Create a folder named `archive/<volume>/<YYYY-MM-DD>-<slug>/` (no spaces or
+parentheses) with an `issue.md`:
 
 ```yaml
 ---
@@ -95,8 +95,8 @@ a volume. `credits` (a list of `{ title, names }`) is also supported.
 
 When a new issue is ready:
 
-1. **Archive the outgoing issue.** Add it under `website/content/issues/…` with
-   its final typeset PDF (and source, if available), as above.
+1. **Archive the outgoing issue.** Add it under `archive/…` with its final
+   typeset PDF (and source, if available), as above.
 2. **Swap in the new articles.** Replace the files in `website/content/current/`
    (and `website/content/current/images/`) with the new issue's articles.
 3. **Update the masthead.** Bump `currentIssue` in `website/src/config.ts`.
