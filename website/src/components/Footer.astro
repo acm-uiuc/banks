@@ -10,7 +10,9 @@ import { BanksHorizontalLogo } from "@/components/BanksLogo";
   <a href="/">
     <BanksHorizontalLogo className="w-fit max-h-16" />
   </a>
-  <div class="flex flex-col">
+  <div class="flex flex-row gap-6 font-bold">
+    <a href="/" class="hover:underline">Current Issue</a>
+    <a href="/archive" class="hover:underline">Archive</a>
     <a href="/about" class="hover:underline">About</a>
   </div>
   <span class="text-center my-4">&copy; {new Date().getFullYear()} ACM@UIUC.</span>

@@ -3,7 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "collect-archive-assets": "node scripts/collect-archive-assets.mjs",
+    "predev": "npm run collect-archive-assets",
     "dev": "astro dev",
+    "prebuild": "npm run collect-archive-assets",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -23,6 +26,7 @@
     "tailwindcss": "^4.1.16"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19"
+    "@tailwindcss/typography": "^0.5.19",
+    "gray-matter": "^4.0.3"
   }
 }

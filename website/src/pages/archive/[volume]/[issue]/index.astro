@@ -1,0 +1,82 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { getArchiveIssues } from '@/lib/collections';
+import { archiveFileUrl } from '@/lib/slug.mjs';
+import { formatDate, issueHeading } from '@/lib/utils';
+
+export async function getStaticPaths() {
+  const issues = await getArchiveIssues();
+  return issues.map((issue) => ({
+    params: { volume: String(issue.data.volume), issue: issue.slug },
+    props: { issue },
+  }));
+}
+
+const { issue } = Astro.props;
+const data = issue.data;
+const print = data.print ?? {};
+
+const fileUrl = (name?: string) =>
+  name ? archiveFileUrl(data.volume, issue.slug, name.split('/').pop()!) : null;
+
+const pdfUrl = fileUrl(print.pdf) ?? fileUrl(print.pdf_scan);
+const sourceUrl = fileUrl(print.source);
+const sourceName = print.source?.split('/').pop();
+---
+<Layout title={`Volume ${data.volume}, Issue ${data.issue}`}>
+  <div class="max-w-4xl mx-auto py-6">
+    <a href="/archive" class="text-sm text-gray-500 hover:underline">&larr; Archive</a>
+
+    <header class="mt-2 mb-6">
+      <h1 class="font-headline font-bold text-3xl md:text-4xl">
+        Volume {data.volume}, {issueHeading(data)}{data.label && <span class="text-gray-500"> &middot; {data.label}</span>}
+      </h1>
+      <p class="text-gray-500 mt-1">{formatDate(data.date)}</p>
+      {data.note && (
+        <p class="mt-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2 inline-block">
+          {data.note}
+        </p>
+      )}
+    </header>
+
+    {pdfUrl ? (
+      <iframe
+        src={pdfUrl}
+        class="w-full h-[85vh] border border-gray-300 rounded"
+        title={`Volume ${data.volume}, Issue ${data.issue}`}
+      />
+    ) : print.website ? (
+      <p class="text-gray-600">This issue is hosted on an external site &mdash; see the link below.</p>
+    ) : (
+      <p class="text-gray-500">No digital copy of this issue is available yet.</p>
+    )}
+
+    <div class="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm">
+      {pdfUrl && (
+        <a href={pdfUrl} class="text-[#0053b3] underline" download>Download PDF</a>
+      )}
+      {sourceUrl && (
+        <a href={sourceUrl} class="text-[#0053b3] underline" download>Source ({sourceName})</a>
+      )}
+      {print.website && (
+        <a href={print.website} target="_blank" rel="noopener noreferrer" class="text-[#0053b3] underline">
+          View on external site &#8599;
+        </a>
+      )}
+    </div>
+
+    {data.credits && data.credits.length > 0 && (
+      <section class="mt-10">
+        <h2 class="font-headline text-xl font-semibold mb-3">Credits</h2>
+        <dl class="text-sm space-y-1">
+          {data.credits.map((credit) => (
+            <div class="flex gap-2">
+              <dt class="font-medium shrink-0">{credit.title}:</dt>
+              <dd class="text-gray-600">{credit.names.join(', ')}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+  </div>
+</Layout>
