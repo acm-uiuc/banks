@@ -15,7 +15,7 @@ export const collections = {
   // into the `archive` as typeset files. Images go in a sibling `images/`
   // folder and are referenced with relative paths in the article body.
   current: defineCollection({
-    loader: glob({ pattern: '*.md', base: '../content/current' }),
+    loader: glob({ pattern: '*.md', base: './content/current' }),
     schema: ({ image }) => z.object({
       title: z.coerce.string().describe("Article title (use 'Title Case')"),
       authors: z.optional(z.array(z.coerce.string())).describe("Author name(s)"),
@@ -37,7 +37,7 @@ export const collections = {
     // a volume (e.g. `1-quad-day` recurs across volumes), which would collide.
     loader: glob({
       pattern: '**/issue.md',
-      base: '../content/issues',
+      base: './content/issues',
       generateId: ({ entry }) => entry.replace(/\/issue\.md$/i, ''),
     }),
     schema: () => z.object({

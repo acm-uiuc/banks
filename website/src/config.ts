@@ -30,8 +30,8 @@ const siteConfig: ISiteConfig = {
   color: "#0053b3",
   currentIssue: {
     volume: 43,
-    number: 1,
-    date: "2025-10-31",
+    number: 2,
+    date: "2026-05-15",
   },
 };
 

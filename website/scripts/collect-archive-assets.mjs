@@ -12,7 +12,7 @@ import matter from "gray-matter";
 import { archiveIssueSlug } from "../src/lib/slug.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ISSUES_DIR = path.resolve(__dirname, "../../content/issues");
+const ISSUES_DIR = path.resolve(__dirname, "../content/issues");
 const OUT_DIR = path.resolve(__dirname, "../public/files");
 
 // Frontmatter fields under `print:` that point to local files (not the
