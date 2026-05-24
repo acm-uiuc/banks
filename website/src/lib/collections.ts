@@ -1,52 +1,85 @@
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { slugify, archiveIssueSlug } from "./slug.mjs";
 
-export function slugify(text: string): string {
-  return text
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+export { slugify };
+
+export type CurrentArticle = CollectionEntry<"current"> & {
+  slug: string;
+  fullSlug: string;
+  excerpt: string;
+};
+
+/** Build a plain-text excerpt from raw markdown for feed previews. */
+function makeExcerpt(body: string | undefined, max = 200): string {
+  if (!body) return "";
+  const text = body
+    .replace(/```[\s\S]*?```/g, " ")          // fenced code blocks
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")      // images
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")    // links -> link text
+    .replace(/[#>*_`~]/g, "")                   // markdown punctuation
+    .replace(/\s+/g, " ")
+    .trim();
+  if (text.length <= max) return text;
+  return text.slice(0, max).replace(/\s+\S*$/, "") + "…";
 }
 
-export async function getAllArticles() {
-  const rawArticles = await getCollection("articles");
-  return rawArticles.map((article) => {
-    // If slug is not provided, generate one based on date and title
-    // e.g. YYYY-MM-DD-article-title
-    const rawSlug = article.data.slug || `${article.data.date.toISOString().split('T')[0]}-${article.data.title}`;
-    const generatedSlug = slugify(rawSlug);
-    delete article.data.slug;
-    return {
-      ...article,
-      slug: generatedSlug,
-      fullSlug: `/articles/${generatedSlug}`,
-    };
-  });
+/** Articles of the current issue, sorted for display. */
+export async function getCurrentIssueArticles(): Promise<CurrentArticle[]> {
+  const raw = await getCollection("current");
+  return raw
+    .map((article) => {
+      const slug = slugify(article.data.slug || article.id);
+      return {
+        ...article,
+        slug,
+        fullSlug: `/articles/${slug}`,
+        excerpt: makeExcerpt(article.body),
+      };
+    })
+    .sort((a, b) => {
+      // explicit `order` first, then newest date, then title
+      const ao = a.data.order ?? Number.POSITIVE_INFINITY;
+      const bo = b.data.order ?? Number.POSITIVE_INFINITY;
+      if (ao !== bo) return ao - bo;
+      const ad = a.data.date?.getTime() ?? 0;
+      const bd = b.data.date?.getTime() ?? 0;
+      if (ad !== bd) return bd - ad;
+      return a.data.title.localeCompare(b.data.title);
+    });
 }
 
-export async function getAllIssues() {
-  const rawIssues = await getCollection("issues");
-  return rawIssues.map((issue) => {
-    const rawSlug = issue.data.slug || issue.data.issue;
-    const generatedSlug = slugify(rawSlug);
-    delete issue.data.slug;
+export type ArchiveIssue = CollectionEntry<"archive"> & {
+  slug: string;
+  fullSlug: string;
+};
+
+export async function getArchiveIssues(): Promise<ArchiveIssue[]> {
+  const raw = await getCollection("archive");
+  return raw.map((issue) => {
+    const slug = archiveIssueSlug(issue.data);
     return {
       ...issue,
-      slug: generatedSlug,
-      fullSlug: `/issues/${issue.data.volume.toString()}/${generatedSlug}`,
+      slug,
+      fullSlug: `/archive/${issue.data.volume}/${slug}`,
     };
   });
 }
 
-export async function getVolumesToIssuesMap() {
-  const issues = await getAllIssues();
-  const volumeIssueMap: Record<string, typeof issues> = {};
-  issues.forEach((issue) => {
-    const volume = issue.data.volume.toString();
-    if (!volumeIssueMap[volume]) {
-      volumeIssueMap[volume] = [];
-    }
-    volumeIssueMap[volume].push(issue);
-  });
-  return volumeIssueMap;
+export type ArchiveVolume = { volume: number; issues: ArchiveIssue[] };
+
+/** Archive grouped by volume — volumes newest-first, issues newest-first. */
+export async function getArchiveByVolume(): Promise<ArchiveVolume[]> {
+  const issues = await getArchiveIssues();
+  const byVolume = new Map<number, ArchiveIssue[]>();
+  for (const issue of issues) {
+    const list = byVolume.get(issue.data.volume) ?? [];
+    list.push(issue);
+    byVolume.set(issue.data.volume, list);
+  }
+  return [...byVolume.entries()]
+    .map(([volume, list]) => ({
+      volume,
+      issues: list.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    }))
+    .sort((a, b) => b.volume - a.volume);
 }

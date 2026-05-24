@@ -1,61 +1,65 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '@/layouts/Base.astro';
-import { getAllArticles } from '@/lib/collections';
+import { getCurrentIssueArticles } from '@/lib/collections';
+import { formatDate, byline } from '@/lib/utils';
+import config from '@/config';
 
-const articles = await getAllArticles();
-const sortedArticles = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const articles = await getCurrentIssueArticles();
+const issue = config.currentIssue;
+const issueDate = issue ? new Date(issue.date) : undefined;
 ---
 <Layout>
-  <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {sortedArticles
-      .filter((article) => !article.data.tags?.includes('sig-updates'))
-      .slice(0, 4)
-      .map((article) => (
-        <li class="prose">
-          <a href={article.fullSlug} class="no-underline hover:underline">
-            <span class="font-headline font-bold text-3xl">
-              {article.data.title}
-            </span>
-            <span class="block text-sm text-gray-500">
-              {article.data.byline || (article.data.authors && article.data.authors.length > 0 ? `By ${article.data.authors.length > 1 ? article.data.authors.slice(0, -1).join(', ') + ' and ' + article.data.authors.slice(-1) : article.data.authors[0]}` : "By Anonymous")}
-            </span>
-            <span class="block text-sm text-gray-500">
-              {new Date(article.data.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <hr class="my-4" />
-  <a href="/articles?tag=sig-updates" class="hover:underline">
-    <h2 class="font-bold text-2xl">SIG Updates</h2>
-  </a>
-  <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-    {sortedArticles
-      .filter((article) => article.data.tags?.includes('sig-updates'))
-      .slice(0, 6)
-      .map((article) => (
-        <li class="prose">
-          <a href={article.fullSlug} class="no-underline hover:underline">
-            <span class="font-headline font-bold text-xl">{article.data.title}</span>
-            <span class="block text-sm text-gray-500">
-              {article.data.byline || (article.data.authors && article.data.authors.length > 0 ? `By ${article.data.authors.length > 1 ? article.data.authors.slice(0, -1).join(', ') + ' and ' + article.data.authors.slice(-1) : article.data.authors[0]}` : "By Anonymous")}
-            </span>
-            <span class="block text-sm text-gray-500">
-              {new Date(article.data.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <section class="max-w-3xl mx-auto py-6">
+    {issue && (
+      <header class="text-center mb-10">
+        <p class="text-sm tracking-[0.2em] uppercase text-gray-500">
+          Vol. {issue.volume}, No. {issue.number}
+          {issueDate && <> &middot; {issueDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</>}
+        </p>
+        {issue.title && (
+          <h1 class="font-headline font-bold text-3xl mt-2">{issue.title}</h1>
+        )}
+      </header>
+    )}
+
+    {articles.length === 0 ? (
+      <p class="text-center text-gray-500 py-16">
+        No articles in the current issue yet. Check back soon.
+      </p>
+    ) : (
+      <ul class="divide-y divide-gray-200">
+        {articles.map((article) => (
+          <li>
+            <a href={article.fullSlug} class="group flex gap-6 py-8 items-start">
+              <div class="flex-1 min-w-0">
+                <h2 class="font-headline font-bold text-2xl md:text-3xl leading-tight group-hover:underline">
+                  {article.data.title}
+                </h2>
+                {article.data.subtitle && (
+                  <p class="mt-2 text-lg text-gray-600">{article.data.subtitle}</p>
+                )}
+                <p class="mt-2 text-gray-700 line-clamp-2">{article.excerpt}</p>
+                <p class="mt-3 text-sm text-gray-500">
+                  {byline(article.data)}
+                  {(article.data.date ?? issueDate) && (
+                    <> &middot; {formatDate(article.data.date ?? issueDate)}</>
+                  )}
+                </p>
+              </div>
+              {article.data.image && (
+                <Image
+                  src={article.data.image.src}
+                  alt={article.data.image.alt}
+                  width={352}
+                  height={224}
+                  class="w-28 h-20 md:w-44 md:h-28 object-cover rounded shrink-0"
+                />
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
 </Layout>

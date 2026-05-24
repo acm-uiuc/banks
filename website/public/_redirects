@@ -1,0 +1,6 @@
+# Old URLs from the pre-refactor site -> new Current Issue / Archive layout.
+# Cloudflare Pages evaluates these top-to-bottom; keep specific rules first.
+/issues/latest    /                  301
+/issues           /archive           301
+/articles         /                  301
+/issues/*         /archive/:splat    301

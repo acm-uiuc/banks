@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# archive print files copied from ../archive by scripts/collect-archive-assets.mjs
+public/files/
 
 # dependencies
 node_modules/

@@ -21,14 +21,9 @@ export default function Navbar() {
         </span>
         <span className="w-1/4" />
       </div>
-      <nav className="flex flex-row gap-4 md:gap-6 lg:gap-8 self-center font-bold">
-        <a href="/issues/latest">Latest Issue</a>
-        <a href="/issues">All Issues</a>
-        {/* <a href="/articles">All Articles</a> */}
-        <a href="/articles?tag=sig-updates">SIG Updates</a>
-        <a href="/articles?tag=deep-dives">Deep Dives</a>
-        <a href="/articles?tag=life">Campus + Life</a>
-        <a href="/articles?tag=fun">Fun</a>
+      <nav className="flex flex-row gap-6 md:gap-8 lg:gap-10 self-center font-bold">
+        <a href="/">Current Issue</a>
+        <a href="/archive">Archive</a>
         <a href="/about">About</a>
       </nav>
       <span className="w-full">

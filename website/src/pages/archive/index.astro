@@ -1,0 +1,67 @@
+---
+import Layout from '@/layouts/Base.astro';
+import { getArchiveByVolume, type ArchiveIssue } from '@/lib/collections';
+import { formatDate, issueHeading } from '@/lib/utils';
+
+const volumes = await getArchiveByVolume();
+
+function formats(issue: ArchiveIssue): string[] {
+  const print = issue.data.print;
+  if (!print) return [];
+  const labels: string[] = [];
+  if (print.pdf) labels.push('PDF');
+  if (print.pdf_scan) labels.push('Scan');
+  if (print.source) labels.push('Source');
+  if (print.website) labels.push('Web');
+  return labels;
+}
+---
+<Layout
+  title="Archive"
+  description="Every surviving issue of Banks of the Boneyard, from 1984 onward."
+>
+  <div class="max-w-3xl mx-auto py-6">
+    <header class="mb-10">
+      <h1 class="font-headline font-bold text-4xl">Archive</h1>
+      <p class="mt-2 text-gray-600">
+        Every surviving issue of <em>Banks of the Boneyard</em>, from 1984 onward.
+      </p>
+    </header>
+
+    {volumes.map(({ volume, issues }) => (
+      <section class="mb-10">
+        <h2 class="font-headline text-2xl font-semibold border-b border-gray-200 pb-1 mb-2">
+          Volume {volume}
+          <span class="font-sans font-normal text-base text-gray-400">
+            &middot; {issues[0].data.date.getFullYear()}
+          </span>
+        </h2>
+        <ul class="divide-y divide-gray-100">
+          {issues.map((issue) => (
+            <li>
+              <a href={issue.fullSlug} class="group flex items-baseline justify-between gap-4 py-3">
+                <span class="min-w-0">
+                  <span class="font-medium group-hover:underline">{issueHeading(issue.data)}</span>
+                  {issue.data.label && (
+                    <span class="text-gray-600"> &middot; {issue.data.label}</span>
+                  )}
+                  <span class="text-gray-500"> &middot; {formatDate(issue.data.date)}</span>
+                  {issue.data.note && (
+                    <span class="block text-xs text-gray-400">{issue.data.note}</span>
+                  )}
+                </span>
+                <span class="flex flex-wrap gap-1.5 shrink-0">
+                  {formats(issue).map((label) => (
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                      {label}
+                    </span>
+                  ))}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Layout>
